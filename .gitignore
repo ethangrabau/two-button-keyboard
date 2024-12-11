@@ -1,0 +1,29 @@
+# Dependencies
+node_modules/
+__pycache__/
+*.pyc
+.env
+venv/
+dist/
+
+# ML Models and large files
+models/
+*.pt
+*.bin
+*.gguf
+*.model
+transformers/
+pytorch_model.bin
+model.safetensors
+
+# Development
+.DS_Store
+.vscode/
+.idea/
+*.log
+npm-debug.log*
+
+# Build artifacts
+/dist
+/build
+*.egg-info/
