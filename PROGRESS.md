@@ -1,75 +1,73 @@
 # Two-Button Keyboard BCI Project Progress
 
-## Latest Updates (December 11, 2024)
+## Latest Updates (December 13, 2024)
 
-### Completed Features
-- Enhanced phrase matcher with candidate generation
-- Comprehensive test suite implementation
-- Phi-2 LLM integration with Metal acceleration
-- Pattern-based word prediction
-- Multi-word phrase prediction
-- Caching system for frequent predictions
+### Project Evolution
+We've explored several approaches:
+1. Pattern matching with LLM candidate selection (archived)
+   - Too slow (~2s latency)
+   - Complex pipeline
+   - Difficult to optimize
+
+2. Current Approach: Direct Pattern Transformer
+   - Direct pattern-to-token generation
+   - Built-in L/R pattern constraints
+   - No LLM dependency
+   - Target latency: <300ms
 
 ### Current State
-- Basic keyboard interface functional
-- LLM integration working with greedy decoding
-- Test suite passing 7/8 cases
-- Pattern matching latency: ~50ms
-- Phrase prediction latency: ~2s
-- Frontend supports phrase building
+- Successfully implemented keyboard L/R pattern mapping (passing all tests)
+- Built prototype transformer model with pattern constraints
+- Implemented data loading pipeline for chat data
+- Built comprehensive training infrastructure
+- Architecture components:
+  - Pattern Encoder: Converts L/R patterns to embeddings
+  - Context Encoder: Handles chat history
+  - Pattern-Constrained Decoder: Generates valid tokens
 
-### Technical Implementation
-- Phi-2 model running on MPS with Metal acceleration
-- Pattern matcher using frequency-based scoring
-- React frontend with pattern batching
-- Flask backend with async LLM initialization
-- Caching layer for common predictions
+### Recent Additions
+1. Data Processing:
+   - Support for Google Messages JSON format
+   - Support for preprocessed CSV format
+   - Word frequency weighting
+   - Efficient batch processing
 
-### Known Issues
-1. Question response prediction needs improvement ("I am doing fine" test failing)
-2. Latency still high for multi-word phrases (~2s)
-3. Frontend could better handle rapid input
-4. Need better context utilization in LLM prompts
+2. Training Infrastructure:
+   - Mixed precision training
+   - Gradient accumulation
+   - Learning rate warmup
+   - Automated checkpointing
+   - Privacy-focused (all local)
 
 ### Next Steps
-1. Improve response prediction accuracy:
-   - Enhanced context handling in prompts
-   - Better candidate scoring for responses
-   - Special handling for common phrases
+1. Test Training Pipeline:
+   - Run initial training loop
+   - Validate data processing
+   - Test checkpointing
+   - Measure basic metrics
 
-2. Optimize performance:
-   - Reduce LLM latency through prompt optimization
-   - Improve caching strategy
-   - Better input batching
+2. Model Optimization:
+   - Ensure <300ms latency
+   - Target 90%+ accuracy after user-specific training
+   - Optimize for Metal acceleration
 
-3. Enhance user experience:
-   - Smoother phrase building
-   - Better visual feedback
-   - More responsive predictions
+3. Create Evaluation Tools:
+   - Pattern prediction accuracy
+   - Latency benchmarking
+   - Example generations
 
-4. Implement learning system:
-   - Personal vocabulary tracking
-   - Usage pattern learning
-   - Context-aware adaptation
+### Technical Details
+- Location: src/direct_pattern_transformer/
+- Python 3.10 with PyTorch
+- Core Components:
+  - model.py: Pattern-constrained transformer
+  - keyboard_mapping.py: L/R pattern generation
+  - data_loader.py: Chat data processing
+  - trainer.py: Training infrastructure
+  - test_model.py: Test suite
 
-## Technical Details
-
-### Model Configuration
-- Using Phi-2 (2.7B parameters)
-- Running in float16 precision
-- Metal acceleration enabled
-- Greedy decoding for consistency
-
-### Performance Metrics
-- Single word prediction: ~50ms
-- Phrase prediction (2-3 words): ~1s
-- Phrase prediction (4+ words): ~2s
-- Cache hit rate: TBD
-- Prediction accuracy: ~80% for common phrases
-
-### Key Files
-- `server/prediction_server.py`: Main prediction logic
-- `server/llm/phi_interface.py`: LLM integration
-- `src/prediction/enhanced_phrase_matcher.py`: Phrase handling
-- `server/test_prediction.py`: Test suite
-- `src/components/KeyboardInterface.jsx`: Frontend interface
+### Performance Targets
+- Pattern Matching: <50ms
+- Total Prediction: <300ms
+- Accuracy: >90% (with user-specific training)
+- Novel Word Support: Yes (through subword tokens)

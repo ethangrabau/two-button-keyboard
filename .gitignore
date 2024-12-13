@@ -1,29 +1,44 @@
 # Dependencies
-node_modules/
-__pycache__/
-*.pyc
-.env
+node_modules
+node_modules/*
+**/node_modules
+**/node_modules/**
+package-lock.json
+
+# Python Virtual Environment
+env/
 venv/
-dist/
+ENV/
+src/direct_pattern_transformer/env/
+**/__pycache__/
+*.py[cod]
+*$py.class
 
-# ML Models and large files
-models/
+# Training artifacts
+checkpoints/
+models/llama.cpp/
 *.pt
-*.bin
-*.gguf
-*.model
-transformers/
-pytorch_model.bin
-model.safetensors
+*.pth
+*.ckpt
+training.log
 
-# Development
-.DS_Store
-.vscode/
-.idea/
-*.log
-npm-debug.log*
-
-# Build artifacts
-/dist
-/build
+# Build outputs
+build/
+dist/
 *.egg-info/
+*.so
+.Python
+
+# IDE and OS files
+.idea/
+.vscode/
+*.swp
+*.swo
+.DS_Store
+*.log
+.env
+.env.local
+
+# Jupyter
+.ipynb_checkpoints
+*.ipynb
